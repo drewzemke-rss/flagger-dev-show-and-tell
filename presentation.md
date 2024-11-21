@@ -37,10 +37,19 @@ Additionally, attendees will eventually be able to (perhaps after some documenta
   - gives you control over feature flags during local development
   - lets you write better tests (e2e and isolated) that test your app with both the flag on and off
 
-- how to set it up
-  - docker, vite, client-sdk
-  - or... just link to the readme?
-  - put folks in breakout rooms for this? so they can work on their team's projects
+- how to set it up (interactive part!)
+  - idea: *everyone* does this individually, not in groups?
+  - idea: do this in `core-demo` live? ... or maybe not, because then folks will just watch
+  - prereq: need to have some working react app? (eg. core demo)
+  - directions
+    - setup flagger local docker
+      - copy config from readme
+    - add `client-sdk` to client
+    - add `FlaggerProvider` to component tree
+      - needs to be inside `LDProvider`, if there is one
+    - add stuff `vite.config.ts`
+    - add a flag check somewhere in app
+    - try toggling flag from `/flagger` and reloading to see the effect
 
 - conclusion: what to do next?
   - start using feature flags more!
