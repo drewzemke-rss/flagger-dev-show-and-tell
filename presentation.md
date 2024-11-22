@@ -32,8 +32,10 @@ Additionally, attendees will eventually be able to (perhaps after some documenta
   - a service for server-side flag checks, and
   - utilities for controlling flags during test runs
 <br>
+
 - A *local webapp* to enable flag control both by hand and in end-to-end tests
 <br>
+
 - A *webapp* running in Dev that allows per-user feature flag control
   - (This will eventually be deployed to QA and Prod too)
 
@@ -45,9 +47,11 @@ Additionally, attendees will eventually be able to (perhaps after some documenta
   - no need to initialize the client provider
   - encapsulates client-ids so you don't have to inject them
 <br>
+
 - Flagger gives you *control* over feature flags *during local development*
   - see the effect of changing flags on your app without deploying it
 <br>
+
 - Helps you write *better tests*
   - includes utilities that support both *isolated* and *end-to-end* tests
   - makes it easy to test your app with different flag configurations
@@ -84,15 +88,20 @@ Everything you need is written out in the GitHub repo:
   - `docker-compose.yaml` -- add container declaration
   - `vite.config.ts`-- add config 
 <br>
+
 - Add the Flagger to your client: `pnpm install @risk-and-safety/flagger-client-sdk`
 <br>
+
 - Include `FlaggerProvider` in your component tree in `index.tsx`
 <br>
+
 - Check a flag somewhere in your app:
+
 ```ts
   const flagger = useFlagger();
   const flag = flagger.check('flagger-test-flag');
 ```
+
 - Toggle the flag from `/flagger` and reload to see the effect
 
 
@@ -103,8 +112,9 @@ Everything you need is written out in the GitHub repo:
 - During *local development*, the Flagger SDKs read flags from the *locally-running Flagger server*
   - The server, in turn, gets information about what flags exist from LaunchDarkly
 <br>
+
 - In a *deployed environment* (eg., Dev, QA, Prod), Flagger gets flag data *directly from LaunchDarkly*
-<br>
+
 (Flagger figures this out on its own, you don't have to pass any configuration)
 
 ---
@@ -113,8 +123,10 @@ Everything you need is written out in the GitHub repo:
 
 - Start using feature flags more! Live the continuous delivery dream
 <br>
+
 - You can remove LaunchDarkly from your imports and replace it with Flagger
 <br>
+
 - Check out the docs for `flagger-server-sdk` and `flagger-e2e-utils`, which 
   bring Flagger's features to your server applications and end-to-end tests, respectively
 
