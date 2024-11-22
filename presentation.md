@@ -15,43 +15,106 @@ RSS Dev Show & Tell
 
 After this hour, attendees will be able to
 
-1. Use Flagger's local webapp and dev webapp to control feature flags, and 
-2. Set up Flagger's `client-sdk` or `server-sdk` package in their project and use it to check flag values.
+1. Use Flagger's local webapp and dev webapp to control local feature flag values, and 
+2. Set up Flagger's `client-sdk` package in their project and use it to check flag values.
 
 Additionally, attendees will eventually be able to (perhaps after some documentation consultation):
 
-3. Use Flagger's `e2e-utils` package to control flags during their end-to-end tests.
+3. Set up Flagger's `server-sdk` package in their project, and
+4. Use Flagger's `e2e-utils` package to control flags during their end-to-end tests.
 
 ---
 
-## Outline
+## What is Flagger?
 
-- what is Flagger?
-  - wrapper for LaunchDarkly's APIs and javascript sdks
-  - local webapp to enable flag control both by hand and in e2e tests
-  - webapp running in dev that allows per-user feature flag control
-    - eventually will run in qa and prod too and give the same control to QAs
+- A *wrapper* for LaunchDarkly's javascript SDKs, including:
+  - a React provider/hook pair for client-side flag checks,
+  - a service for server-side flag checks, and
+  - utilities for controlling flags during test runs
+<br>
+- A *local webapp* to enable flag control both by hand and in end-to-end tests
+<br>
+- A *webapp* running in Dev that allows per-user feature flag control
+  - (This will eventually be deployed to QA and Prod too)
 
-- why use Flagger?
-  - integrates LD into your app with less overhead
-  - gives you control over feature flags during local development
-  - lets you write better tests (e2e and isolated) that test your app with both the flag on and off
+---
 
-- how to set it up (interactive part!)
-  - idea: *everyone* does this individually, not in groups?
-  - idea: do this in `core-demo` live? ... or maybe not, because then folks will just watch
-  - prereq: need to have some working react app? (eg. core demo)
-  - directions
-    - setup flagger local docker
-      - copy config from readme
-    - add `client-sdk` to client
-    - add `FlaggerProvider` to component tree
-      - needs to be inside `LDProvider`, if there is one
-    - add stuff `vite.config.ts`
-    - add a flag check somewhere in app
-    - try toggling flag from `/flagger` and reloading to see the effect
+## Why use Flagger?
 
-- conclusion: what to do next?
-  - start using feature flags more!
-  - can remove LD from imports, replace with flagger
-  - write isolated tests and e2e's that control flags
+- Flagger integrates *LaunchDarkly* into your app *with less boilerplate*
+  - no need to initialize the client provider
+  - encapsulates client-ids so you don't have to inject them
+<br>
+- Flagger gives you *control* over feature flags *during local development*
+  - see the effect of changing flags on your app without deploying it
+<br>
+- Helps you write *better tests*
+  - includes utilities that support both *isolated* and *end-to-end* tests
+  - makes it easy to test your app with different flag configurations
+
+---
+
+## Demo
+
+Let's see what Flagger's setup looks like in `forms`!
+
+<!--
+- walk through where all of the setup is 
+  - docker-compose
+  - setup-dotenv
+  - vite config
+  - index.tsx (for provider)
+- live example of adding a flag to a component
+  - `FormBuilderToolbar.tsx`
+- do we want to show the isolated test setup? 
+  - if so, have it written beforehand and just show it
+-->
+
+---
+
+## Your Turn!
+
+Everything you need is written out in the GitHub repo: 
+[https://github.com/risk-and-safety/flagger](https://github.com/risk-and-safety/flagger)
+
+### Directions
+
+- Set up Flaggers' local Docker container
+  - `.env` -- add port
+  - `docker-compose.yaml` -- add container declaration
+  - `vite.config.ts`-- add config 
+<br>
+- Add the Flagger to your client: `pnpm install @risk-and-safety/flagger-client-sdk`
+<br>
+- Include `FlaggerProvider` in your component tree in `index.tsx`
+<br>
+- Check a flag somewhere in your app:
+```ts
+  const flagger = useFlagger();
+  const flag = flagger.check('flagger-test-flag');
+```
+- Toggle the flag from `/flagger` and reload to see the effect
+
+
+---
+
+## Note: Local vs Deployed Behavior
+
+- During *local development*, the Flagger SDKs read flags from the *locally-running Flagger server*
+  - The server, in turn, gets information about what flags exist from LaunchDarkly
+<br>
+- In a *deployed environment* (eg., Dev, QA, Prod), Flagger gets flag data *directly from LaunchDarkly*
+<br>
+(Flagger figures this out on its own, you don't have to pass any configuration)
+
+---
+
+## Now what? 
+
+- Start using feature flags more! Live the continuous delivery dream
+<br>
+- You can remove LaunchDarkly from your imports and replace it with Flagger
+<br>
+- Check out the docs for `flagger-server-sdk` and `flagger-e2e-utils`, which 
+  bring Flagger's features to your server applications and end-to-end tests, respectively
+
