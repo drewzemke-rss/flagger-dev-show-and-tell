@@ -107,7 +107,9 @@ Everything you need is written out in the GitHub repo:
 
 ---
 
-## Note: Local vs Deployed Behavior
+## Extra Notes
+
+### Local vs Deployed Behavior
 
 - During *local development*, the Flagger SDKs read flags from the *locally-running Flagger server*
   - The server, in turn, gets information about what flags exist from LaunchDarkly
@@ -116,6 +118,18 @@ Everything you need is written out in the GitHub repo:
 - In a *deployed environment* (eg., Dev, QA, Prod), Flagger gets flag data *directly from LaunchDarkly*
 
 (Flagger figures this out on its own, you don't have to pass any configuration)
+
+### Manage Flags in LaunchDarkly
+
+- You need to create and configure flags in LD *before* using them in Flagger
+<br>
+
+- Releasing and targeting of flags also needs to be done through LD's webapp
+<br>
+
+- More generally, Flagger is meant to be *part of* the flag management workflow; it doesn't replace LaunchDarkly entirely
+
+
 
 ---
 
@@ -127,6 +141,5 @@ Everything you need is written out in the GitHub repo:
 - You can remove LaunchDarkly from your imports and replace it with Flagger
 <br>
 
-- Check out the docs for `flagger-server-sdk` and `flagger-e2e-utils`, which 
-  bring Flagger's features to your server applications and end-to-end tests, respectively
+- Check out the docs for `flagger-server-sdk` and `flagger-e2e-utils`, which bring Flagger's features to your server applications and end-to-end tests, respectively
 
